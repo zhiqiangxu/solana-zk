@@ -2,8 +2,15 @@ import * as web3 from "@solana/web3.js";
 import * as snarkjs from "snarkjs";
 import path from "path";
 import { buildBn128, utils } from "ffjavascript";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 const { unstringifyBigInts } = utils;
 
+// Get the current module's filename
+const __filename = fileURLToPath(import.meta.url);
+
+// Get the current directory name
+const __dirname = dirname(__filename);
 const wasmPath = path.join(__dirname, "../circuits", "Multiplier.wasm");
 const zkeyPath = path.join(__dirname, "../circuits", "Multiplier_final.zkey");
 
@@ -116,7 +123,7 @@ describe('Groth16 Verifier', () => {
 function to32ByteBuffer(bigInt) {
   const hexString = bigInt.toString(16).padStart(64, '0'); // Pad to 64 hex characters (32 bytes)
   const buffer = Buffer.from(hexString, "hex");
-  return buffer; 
+  return buffer;
 }
 
 function g1Uncompressed(curve, p1Raw) {
